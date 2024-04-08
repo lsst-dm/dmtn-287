@@ -1,2 +1,92 @@
 \section{System Requirements} \label{sec:requirements}
-text here
+
+Rubin Observatory has a rigorous approach to requirements management \cite{2016SPIE.9911E..0DS}.
+Most relevant requirements for the USDF are in the Data Management Subsystem Requirements(DMSR) document \cite{LSE-61}.
+Having to switch data facilities encouraged us to pull system requirements which affect the data facility into one document
+which was used to scope the SLAC operations \cite{rtn-080}.
+In this section we will not enumerate requirements however the tables of requirements broadly matching this section may be found in \href{RTN-080}{ls.st/rtn-080}.
+
+In summary the USDF is responsible for significant functionality in several areas as outlined below.
+
+
+\subsection{Networking } \label{sec:networking}
+
+USDF must arrange 100Gbs, path redundant, network capacity to Energy Sciences Network (ESNet) to connect to the Rubin Observatory facility in Chile.
+USDF must ensure their contribution to network latency is maximum 3s.
+Enough bandwidth must also be available to send files to France and UK.
+
+\subsection{Prompt processing} \label{sec:prompproc}
+The USDF will need to run certain software in near real time namely:
+\begin{itemize}
+\item Alert Distribution within two minutes
+\item Prompt Processing Ingest, long term storage of images
+\item Prompt Quality Control, generation of metrics within the two minute prompt processing period
+\item Prompt Processing, processing each image in under two minutes to produce prompt products and alerts
+\item Offline Quality Control, generation of more detailed and cross visit metrics the next day
+\end{itemize}
+This is referred to as the prompt enclave in \cite{DMTN-104}.
+This implies storing camera images and engineering data and making it available to team members within 24 hours.
+It also implies underlying database for the Prompt and Alert product databases.
+
+\subsection{Batch System} \label{sec:offlineprod}
+
+The USDF will need to run certain software in batch mode:
+\begin{itemize}
+\item Batch Production
+\item Offline Quality Control
+\item Bulk Distribution
+\end{itemize}
+This is referred to as the offline production  enclave in \cite{DMTN-104}.
+This implies availability of pipelines, data and infrastructure to run them on.
+The data here includes calibration and WaveFront sensor data.
+IN addition to the DM users Education and Public Outreach (EPO) lay some requirements in this area also - though what exactly remains TBD.
+
+
+\subsection{US Data Access Center}
+The USDF will need to host the US DAC comprising the elements below :
+\begin{itemize}
+\item LSP Nublado
+\item LSP Portal
+\item WebDAV API
+\item SIA API
+\item SODA API
+\item TAP API
+\item LSP Database
+\end{itemize}
+This is referred to as the DAC US Enclave in \cite{DMTN-104}.
+Most of this will now be hosted on google.
+
+Some implications are nightly data being available 80 hours after taking, keeping the historical alerts and allow some user access to batch processing.
+This system is to be sized for around 10K users with perhaps 1K simultaneously accessing at any given time.
+There is further functionality specified for the DAC such as precovery, product regeneration and special program support.
+User generated products must be stored and potentially shared, catalog uploads will also be allowed.
+Access is not only to the current Release but also one previous Release of the data.
+
+\subsection{Data transfer and preservation} \label{req:dbb}
+
+The USDF needs to look after Rubin data in terms of :
+\begin{itemize}
+	\item Ingest/ Metadata Management
+	\item Lifetime Management
+	\item Transport/ Replication/ Backup
+	\item Storage
+\end{itemize}
+
+This is referred to as DataBackbone services  in \cite{DMTN-104}.
+This also implies building in fault tolerance, sizing for catch-up processing and transfer, backup and recovery.
+
+\subsection{Science Platform and Kubernetes} \label{sec:rsp}
+The USDF was also required to be ready to deploy the Rubin Science Platform.
+This is a suite of services deployed on top  of Kubernetes using Helm and ArgoCD.
+Though we use puppet in Chile - USDF use ansibile and chef.
+
+The USDF must provide and up to date Managed Kubernetes, including all necessary administrative access to create/destroy/administer clusters and debug pod and storage problems. This also includes:
+
+\begin{enumerate}
+\item self serve tools for machine and cluster management. e.g. K8S admin.
+\item  ability for Rubin engineers to solely or jointly manage ingress services to the Kubernetes cluster(s)
+\item ability for Rubin services to utilize Kubernetes Dynamic Volume Provisioning.
+\item allow Rubin services to control UID/GID of users in the POSIX filesystem
+\item  allow select services pods (not users) to access storage with escalated privileges
+\end{enumerate}
+

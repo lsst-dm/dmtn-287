@@ -1,2 +1,41 @@
-\section{Continous Deployment across the Rubin facilities} \label{sec:deploy}
-text here
+\section{Continuous Deployment across the Rubin facilities} \label{sec:deploy}
+
+Early on we adopted Kubernetes which provided a service architectures that is well isolated from the underlying infrastructure.
+This approach has already paid off massive dividends.
+For example when funding lines suddenly shifted we were able to painlessly transition from an on-premises facility to an Interim Data Facility on Google Cloud.
+Furthermore the Rubin Science Platform (RSP) became a generic data services platform that is currently deployed on eight distinct (and distinctly managed) infrastructures (on-prem and cloud).
+Finally this has allowed us to leverage the Cloud for services like the RSP which benefit from its advantages such as elasticity, scalability, isolation.
+
+
+\subsection{Division of responsibilities}
+We have had ways to abstract system services from our developed services for some time, containers and java effectively allow one to run \emph{anywhere}.
+These work well enough for single user single processor deployments.
+When you need to scale up another level of orchestration is needed, kubernetes fits neatly between our infrastructure and our developed applications providing a powerful container orchestration and resource management system.
+
+Our agreement with each facility is to provide a Kubernetes deployment platform upon which we may deploy our services.
+It feels like the first time that this actually works well - we have to learned to make our applications portable of course but also the technology is so much better than any precursors.
+
+Each thus provides a kubernetes environment with disk, network and compute resources upon which we spin up our services.
+A vault for secrets is also needed.
+From the service perspective each facility looks similar.
+
+\subsection{Phalanx, Helm and ArgoCD}
+
+Helm\footnote{https://helm.sh/} is a standard approach to tell Kubernetes about software.
+For our purposes this is most usually a JSON file describing which github repo our code is in where the container is and how to start it.
+
+Of course there are parts of this configuration which are site specific and parts which are generic.
+For example the database URL for an application will be different in USDF and Summit, the \emph{value} of the database URL is different are each site, the URL variable is the same so the application does not change only the configuration.
+Phalanx\footnote{phalanx.lsst.io} is our repository of configuration files for all of our deployments.
+Within phalanx each application has a directory with a helm configuration - it also has a values file for each environment to specify the specific values for that environment.
+Each environment also has a Vault configuration so that secrets such as database password may also be specified by an environment specific identifier.
+Finally Phalanx has a list of deployed applications on each site.
+
+Actually deployment is manged by ArgoCD\footnote{https://argo-cd.readthedocs.io/en/stable/}.
+As the name implies ArgoCD provided continuous delivery for Kubernetes.
+It interprets the configuration files stored in Phalanx to deploy containers on the kubernetes system associated with each environment.
+This is a powerful system which can track the main or any given branch or tag of a github repository to keep the application in sync.
+
+\subsection{Continuous Integration}
+We rely on Github actions to build containers for each branch or tag of a given application
+
