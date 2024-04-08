@@ -1,6 +1,6 @@
+Here we enumerate on-prem components.
 \section {US Data Facility Architecture} \label{sec:usdfarch}
 
-Here we enumerate on-prem components.
 
 \begin{figure}
 \begin{centering}
@@ -9,4 +9,102 @@ Here we enumerate on-prem components.
 \end{centering}
 \end{figure}
 
+The scope for the USDF on-prem includes data production services:
+prompt processing, serving alerts to the community and annual Data
+Release Processing. The USDF acts as the archive for all data, and
+provides the Qserv object catalog as well as access to image data, be
+it cutouts or full images. It will provide batch cycles for cloud-based science users.
+
+It will also act as a home for developers and staff (and
+commissioners) to ensure data quality
+
+
+
+\subsection{hardware (storage, compute, networking)}
+
+The USDF is hosted by the S3DF which is itself hosted in SRCF. SRCF
+acommodates projects from SLAC and Stanford, while the S3DF is the
+focal system for SLAC projects. The USDF lives in a shared cluster and
+benefits from economies of scale and standardization across S3DF
+projects. It is also exposed to potentially disruptive activities by
+other projects.
+
+In order to support hundreds of PBs of storage, S3DF adopted the weka
+filesystem for high throughput. Weka is based on a tiered system with
+SSD backed by spinning disk. It presents a POSIX interface while the
+backend is a CEPH object store. This system forms the basis of the
+data archive. A tape robot provides storage for seldom-read data and
+acts as a backup tier.
+
+Batch processing is done on a slurm cluster, currently primarily milan AMD
+processors with 128 cores and 512 GB RAM per node.
+
+Data is transported to the USDF fron the summit over a combined
+leased-line, ESNet supported network with routing optimized via an
+overlay. The leased line terminates in Atlanta, where ESNet takes
+over. Traffic to the two other Data Facilities is also provided by
+ESNet, connecting to the GEANT and Renater systems in Europe.
+
+\subsection{batch processing/data management using PanDA, condor,
+  slurm; Rucio/butler}
+
+The USDF supports batch processing for a number of purposes: annual
+multi-site data releases; pipelines teams testing for algorithms
+performance; processing by individual developers for their algorithm
+development; data quality checking and validation.
+
+Multisite processing makes use of the PanDA workflow system, developed
+by ATLAS for the LHC. It has well defined mechanism for routing work
+from a central server to multiple remote locations. ATLAS has
+demonstrated submitting millions of jobs per day to hundreds of
+sites. A difference between typical astronomy and HEP workflows is the
+number of and duration of processes: astronomy tends to many more much
+shorter jobs than HEP. Significant effort was required with the PanDA
+team to cluster up short jobs to avoid prohibitive startup costs.
+
+PanDA is a heavyweight solution to processing; local processing for
+the pipelines teams and developers is done using HTCondor.
+
+Data management and movement is also orchestrated by LHC tools: Rucio
+for data managment and FTS3 for movement. These tools also routinely
+handle large numbers of files and transfers, but the astronomy:HEP
+difference persists here as well, with astronomy generating many more,
+much smaller files than HEP. This will make the Rubin Rucio database
+bigger than ATLAS's and will required some growth planning.
+
+The large number of small files will also be a challenge for network
+transfer. We are investigating zipping up large numbers of files both
+for better transfer as well as easier storage on tape.
+
 \subsection{Non-user-facing services and why they are on-prem}
+
+Currently the primary reasons for putting services on-prem are a low
+latency requirement for prompt processing, and the still-unfavorable
+comparison of storage prices between on-prem and cloud. To a lesser
+degree, those comparisons also apply to CPU.
+
+This means that Prompt Processing and Alerts production, with their
+2-minute latency requirement are hosted on-prem. Additionally, there
+are security requirements on data arriving at the USDF, including
+physical measures implemented on the racks themselves.
+
+The large data volumes associated with the storage archive and Qserv
+database hosted at the USDF implies that external access to them must be
+provided by services.
+
+Kubernetes is used to manage almost all our services, making use of
+ARGO-CD as well as our custom Phalanx system. Native kubernetes tools
+are used to manage standard services, such as postgres databases,
+making administration, backups etc scalable. Rucio and PanDA are
+managed by kubernetes to take advantage of these features.
+
+The Prompt Processing and Alerts Production are also implemented in
+kubernetes to allow elastic instanciation, configuration and teardown of
+pods responding to notifications from the summit in advance of the
+next visit.
+
+Three large database systems are mininally using kubernetes, as they
+are either commercial or custom services with no native kubernetes
+support. These are the Engineering and Facilities Database (EFD),
+Qserv and Cassandra systems, with Qserv the custom system. EFD is
+implemented with an InfluxDB Enterprise HA cluster.
