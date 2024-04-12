@@ -39,7 +39,7 @@ acts as a backup tier.
 Batch processing is done on a slurm cluster, currently primarily milan AMD
 processors with 128 cores and 512 GB RAM per node.
 
-Data is transported to the USDF fron the summit over a combined
+Data is transported to the USDF from the summit over a combined
 leased-line, ESNet supported network with routing optimized via an
 overlay. The leased line terminates in Atlanta, where ESNet takes
 over. Traffic to the two other Data Facilities is also provided by
@@ -93,7 +93,8 @@ database hosted at the USDF implies that external access to them must be
 provided by services.
 
 Kubernetes is used to manage almost all our services, making use of
-ARGO-CD as well as our custom Phalanx system (see \S \ref{sec:deploy}). Native kubernetes tools
+Argo CD as well as our custom Phalanx system (see \S \ref{sec:deploy}).
+Native kubernetes tools
 are used to manage standard services, such as postgres databases,
 making administration, backups etc scalable. Rucio and PanDA are
 managed by kubernetes to take advantage of these features.
@@ -102,9 +103,26 @@ The Prompt Processing and Alerts Production are also implemented in
 kubernetes to allow elastic instanciation, configuration and teardown of
 pods responding to notifications from the summit in advance of the
 next visit.
+Prompt Processing and Alerts Production both use Kafka installed on Kubernetes.
+We use the Strimzi Operator to install Kafka and for management.  Strimzi
+has worked well to simplify installation, upgrades, and for maintaining
+health of the Kafka Clusters.
 
 Three large database systems are mininally using kubernetes, as they
 are either commercial or custom services with no native kubernetes
 support. These are the Engineering and Facilities Database (EFD),
 Qserv and Cassandra systems, with Qserv the custom system. EFD is
 implemented with an InfluxDB Enterprise HA cluster.
+
+For monitoring we use Prometheus.  Prometheus has native support for
+Kubernetes metrics and many of the Kubernetes operators described earlier
+like Strimzi and the CNPG natively provide metrics in Prometheus. We also
+wrote some of our own metrics to track Next Visit Fan Outs with Prompt Processing.
+We use Grafana for creating dashboards to visual metrics and for generating alerts.
+
+For Logging we use Loki from Grafana Labs to capture logs from Kubernetes
+and application level logs.  Loki supports S3 as a backend so we store logs
+in an on premise S3 Ceph Cluster.
+
+An open area for us to investigate is how we do a consolidate view of key
+metrics and monitoring across the cloud and on-premise.

@@ -34,7 +34,9 @@ Finally Phalanx has a list of deployed applications on each site.
 Actually deployment is manged by ArgoCD\footnote{https://argo-cd.readthedocs.io/en/stable/}.
 As the name implies ArgoCD provided continuous delivery for Kubernetes.
 It interprets the configuration files stored in Phalanx to deploy containers on the kubernetes system associated with each environment.
+Some of the current environments are listed in \autoref{tab:envs}, typically each environment also has a \emph{dev} and \emph{integration} version.
 This is a powerful system which can track the main or any given branch or tag of a github repository to keep the application in sync.
+\input{envs}
 
 \subsection{Continuous Integration}
 We rely on Github actions to build containers for each branch or tag of a given application
