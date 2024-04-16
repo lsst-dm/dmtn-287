@@ -1,11 +1,25 @@
 \section{General cloud benefits and drawbacks} \label{sec:tradeoffs}
 
-One of the major advantages of this approach is the separation of security concerns, users  SLAC require extra checks which take some time because it is a DOE facility.
-SLAC may have difficulty processing accounts  for  our many thousands of users since their process is somewhat lengthy.
+Commercial cloud providers are generally competitive with on-premises facilities for provision of compute cycles, especially where the needs are time-varying.
+Storage costs, however, tend to be higher in the cloud than at research facilities, possibly due to higher durability and availability requirements for commercial data than for research data.
+In terms of networking, cloud providers do not charge for data movement to the cloud from elsewhere, but they do charge for egress from the cloud.
+
+The hybrid model we have chosen uses the cloud for highly-elastic support of science users while keeping the more-constant near-real-time nightly compute load and high-throughput annual reprocessing load at on-premises facilities.
+The bulk of the storage is also maintained on-premises, with relatively small caches and user data living in the cloud.
+This design ensures that the bulk of the data transfer is from SLAC to the cloud, qualifying as free ingress.
+Science users are expected to process the data in the cloud, reducing its volume prior to retrieval to their own systems.
+Thus we attempt to use the strengths of each provider.
+
+Egress charges can be a significant worry when dealing with unconstrained users accessing popular data products.
+We believe these can be controlled through three means: contractual waivers and discounts, throttling of Science Platform applications and interfaces with quota allocations by a Resource Allocation Committee, and potentially the purchase of a fixed-cost, fixed-bandwidth exit network connection to be used by all science users.
+
+One of the major advantages of this approach beyond simple cost considerations is the separation of security concerns.
+Users at SLAC require extra checks which take some time because it is a DOE facility.
+SLAC may have difficulty processing accounts for our many thousands of users.
 By putting all the science users on Google we can streamline access using InCommon \footnote{\url{https://incommon.org/}} which will allow us to identify most US academic users.
 
-We have found Google during the data preview very performant and reliable - we may give up some of this hosting the image data at SLAC.
-In our first SLAC year we have had some data loss and some scaling issues.
+Another benefit that is not directly financial is that the commercial cloud providers are incentivized to provide excellent managed infrastructure tooling such as Kubernetes, relational databases, messaging systems, log explorers, etc., in addition to the underlying compute, storage, and networking.
+Being able to rely on such sophisticated, performant, and reliable tooling eases deployment of our services.
+Academic and research facilities, including SLAC, are often behind when it comes to providing this level of support.
 
-A major plus for on prem in this instance is the backing of DOE - this is what they want and there is commitment to making it work.
-
+A major plus for on-prem in this instance is the backing of DOE; this is what they want, and there is commitment to making it work.

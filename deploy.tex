@@ -39,5 +39,14 @@ This is a powerful system which can track the main or any given branch or tag of
 \input{envs}
 
 \subsection{Continuous Integration}
-We rely on Github actions to build containers for each branch or tag of a given application
+We rely on Github actions to build containers for each branch or tag of a given application.
+In Phalanx a specific branch or tag can be used to test a specific new release of a given application.
+We normally also enable pre-commit to run linting and formatting (black\footnote{\url{https://black.readthedocs.io/en/stable/}}).
+Most Phalanx applications use tox\footnote{\url{https://tox.wiki/en/latest/index.html}} for python automation (testing, documentation building etc).
+
+The science pipelines are build by Jenkins nightly.
+For specific changes developers may invoke the \emph{stack-os-matrix}\footnote{\url{https://developer.lsst.io/stack/jenkins-stack-os-matrix.html}} to check changes will not break the nightly build.
+
+Within SLAC the pipeline stack is distributed on CernVMFS\footnote{\url{https://cernvm.cern.ch/fs/}}.
+
 

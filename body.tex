@@ -1,5 +1,16 @@
 \section{Introduction}
-In 2019 the funding of Rubin Observatory operations changed with DOE increasing its contribution to 50\%. This led to changes in how and where we would operate Rubin Data Management. We used the opportunity and uncertainty to propose the Interim Data Facility (IDF), a cloud based solution,   thus alleviating the immediate need to know the location of the  US Data Facility (USDF). The IDF has been very successful and supported three data previews with simulated data. When SLAC was selected as the USDF we maintained the interim solution to overlap the startup with the USDF; however, as we discussed the architecture a hybrid solution emerged. Keeping all science users on the cloud has certain security and scalability advantages while keeping the bulk of the data at SLAC has some cost advantages. DOE has committed funds for three years of the US cloud based Data Access Center (DAC) on Google, which should bring us to 2027. The interim cloud will transition to become the US DAC. For the first two data previews all data was on Google, the third data preview had the database at SLAC and users on Google. The intention is to have most data at SLAC with the users accessing databases using IVOA protocols and images using the client server Butler. Thus the users do not have SLAC accounts and do not  require approval through more detailed institutional processes .  The system is built on terraform and kubernetes deployed with ARGOCD using our own Phalanx configuration system.
+In 2019 the funding of Rubin Observatory operations changed with the Department of Energy (DOE) increasing its contribution to 50\%, with the bulk of that funding the US Data Facility (USDF) at a site to be determined.
+This led to changes in how and where we would operate Rubin Data Management.
+We used the opportunity and uncertainty to propose the Interim Data Facility (IDF), a cloud based solution, thus alleviating the immediate need to know the location of the USDF.
+The IDF has been very successful and supported three data previews with simulated data.
+When SLAC National Accelerator Laboratory was selected as the USDF we maintained the interim solution to overlap the startup with the USDF; however, as we discussed the architecture a hybrid solution emerged.
+Keeping all science users on the cloud has certain security and scalability advantages while keeping the bulk of the data at SLAC has some cost advantages.
+DOE has committed funds for three years of the US cloud-based Data Access Center (DAC) on Google, which should bring us to 2027.
+The interim cloud will transition to become the US DAC.
+For the first two data previews all data was on Google; the third data preview had the database at SLAC and users on Google.
+The intention is to have most data at SLAC with the users accessing databases using IVOA protocols and images using the client/server Butler.
+Thus the users do not have SLAC accounts and do not require approval through more detailed institutional processes.
+The system is built on terraform and kubernetes deployed with ArgoCD using our own Phalanx configuration system.
 
 \input{requirements}
 \input{tradeoffs}
