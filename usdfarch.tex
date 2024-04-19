@@ -52,14 +52,14 @@ multi-site data releases; pipelines teams testing for algorithms
 performance; processing by individual developers for their algorithm
 development; data quality checking and validation.
 
-Multisite processing makes use of the Production ANd Distributed Analysis system (PanDA), developed
+Multisite processing makes use of the Production ANd Distributed Analysis system (PanDA),\cite{2024CSBS....8....4M} developed
 by ATLAS (A Toroidal LHC Apparatus) for the Large Hadron Colider (LHC).
 It has a well-defined mechanism for routing work
 from a central server to multiple remote locations. ATLAS has
 demonstrated submitting millions of jobs per day to hundreds of sites.
 A difference between typical astronomy and High Energy Physics (HEP) workflows is the
 number of and duration of processes: astronomy tends to many more much
-shorter jobs than HEP. Significant effort was required with the PanDA
+shorter jobs than HEP.\cite{2023arXiv231204921K} Significant effort was required working with the PanDA
 team to cluster up short jobs to avoid prohibitive startup costs.
 PanDA is a heavyweight solution to processing; local processing for
 the pipelines teams and developers is done using HTCondor.
@@ -69,7 +69,7 @@ for data management and FTS3 for movement. These tools also routinely
 handle large numbers of files and transfers, but the astronomy:HEP
 difference persists here as well, with astronomy generating many more,
 much smaller files than HEP. This will make the Rubin Rucio database
-bigger than ATLAS's and will required some growth planning.
+bigger than ATLAS's and will require some growth planning.
 
 The large number of small files will also be a challenge for network
 transfer. We are investigating zipping up large numbers of files both
@@ -85,7 +85,7 @@ degree, those comparisons also apply to CPU.
 This means that Prompt Processing and Alerts production, with their
 2-minute latency requirement are hosted on-prem. Additionally, there
 are security requirements on data arriving at the USDF, including
-physical measures implemented on the racks themselves.
+physical measures implemented on the racks themselves.\cite{DMTN-199}
 
 The large data volumes associated with the storage archive and Qserv
 database hosted at the USDF implies that external access to them must be
@@ -95,7 +95,7 @@ Kubernetes is used to manage almost all our services, making use of
 ArgoCD as well as our custom Phalanx system (see \S \ref{sec:deploy}).
 Native Kubernetes tools
 are used to manage standard services, such as Postgres databases,
-making administration, backups, etc. scalable. Rucio and PanDA are
+making administration, backups, etc, scalable. Rucio and PanDA are
 managed by Kubernetes to take advantage of these features.
 
 The Prompt Processing framework executing the Alert Production is implemented
@@ -110,9 +110,9 @@ health of the Kafka clusters.
 
 Three large database systems are minimally using Kubernetes, as they
 are either commercial or custom services with no native Kubernetes
-support. These are the Engineering and Facilities Database (EFD),
+support. These are the Engineering and Facilities Database (EFD),\cite{2024SPIE13101.59Ftmp}
 Qserv, and Cassandra systems, with Qserv the custom system.
-EFD is implemented with an InfluxDB Enterprise HA cluster.
+The EFD is implemented with an InfluxDB Enterprise HA cluster.
 
 For monitoring we use Prometheus.  Prometheus has native support for
 Kubernetes metrics and many of the Kubernetes operators described earlier
