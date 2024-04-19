@@ -10,3 +10,12 @@ http
 p
 s
 A
+LLC
+AZ
+NJ
+CS70202
+AST1836783
+HA
+IL
+USA
+AC02

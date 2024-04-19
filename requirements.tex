@@ -25,8 +25,7 @@ Prompt products, including both images and catalogs, and alerts are stored for r
 \subsection{Batch System} \label{sec:offlineprod}
 Every year, the accumulated images taken to date will be reprocessed.
 This extensive and complex Data Release Production runs in batch mode across the US, French, and UK Data Facilities.
-The USDF is responsible for providing infrastructure for executing 35% of the Data Release, coordinating the campaign to generate the annual Data Release, ensuring the quality of the data products, archiving a copy of 100% of those products, and making them available to science users through the US DAC.
-
+The USDF is responsible for providing infrastructure for executing 35\% of the Data Release, coordinating the campaign to generate the annual Data Release, ensuring the quality of the data products, archiving a copy of 100\% of those products, and making them available to science users through the US DAC.
 Certain products will also be distributed to Independent Data Access Centers and Science Collaborations.
 
 The batch system and associated interactive nodes are also used extensively by staff for development of future versions of the LSST Science Pipelines code.
@@ -37,9 +36,8 @@ These systems must be fault-tolerant and able to catch up after failures.
 
 \subsection{US Data Access Center}
 The USDF hosts the US DAC.
-To science users, the DAC is primarily an installation of the Rubin Science Platform (RSP).
+To science users, the DAC is primarily an installation of the Rubin Science Platform (RSP) see \autoref{fig:rsp}.
 This software includes the Portal Aspect, a web-based application for browsing, querying, and investigating the data products; the Notebook Aspect, which allows interactive, customized programs to retrieve and manipulate the data products; and the API Aspect, which provides community-standard protocols for automated retrieval of data.
-
 The RSP is deployed using Helm and ArgoCD as a suite of services on top of Kubernetes.
 
 In the hybrid model, most of this will now be hosted in the cloud, with the underlying data, both prompt products and annual Data Release products, fed from the USDF at SLAC.

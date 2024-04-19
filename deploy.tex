@@ -1,10 +1,13 @@
 \section{Continuous Deployment across the Rubin facilities} \label{sec:deploy}
 
+Begin cloud ready is certainly the biggest challenge for most projects/applications which intend to leverage the commercial cloud.
 Early on we adopted Kubernetes which provided a service architectures that is well isolated from the underlying infrastructure.
 This approach has already paid off massive dividends.
 For example when funding lines suddenly shifted we were able to painlessly transition from an on-premises facility to an Interim Data Facility on Google Cloud.
 Furthermore the Rubin Science Platform (RSP) became a generic data services platform that is currently deployed on eight distinct (and distinctly managed) infrastructures (on-prem and cloud).
 Finally this has allowed us to leverage the Cloud for services like the RSP which benefit from its advantages such as elasticity, scalability, isolation.
+
+
 
 
 \subsection{Division of responsibilities}
@@ -44,9 +47,5 @@ In Phalanx a specific branch or tag can be used to test a specific new release o
 We normally also enable pre-commit to run linting and formatting (black\footnote{\url{https://black.readthedocs.io/en/stable/}}).
 Most Phalanx applications use tox\footnote{\url{https://tox.wiki/en/latest/index.html}} for python automation (testing, documentation building etc).
 
-The science pipelines are build by Jenkins nightly.
-For specific changes developers may invoke the \emph{stack-os-matrix}\footnote{\url{https://developer.lsst.io/stack/jenkins-stack-os-matrix.html}} to check changes will not break the nightly build.
-
-Within SLAC the pipeline stack is distributed on CernVMFS\footnote{\url{https://cernvm.cern.ch/fs/}}.
-
-
+The science pipelines are built by Jenkins nightly.
+For specific changes developers may invoke the \emph{stack-os-matrix}\footnote{\url{https://developer.lsst.io/stack/jenkins-stack-os-matrix.html}} to check changes will not break the nightly build. Weekly and stable releases are built from sources and packaged as a conda\footnote{\url{https://docs.conda.io}} environment as well as an Apptainer\footnote{\url{https://apptainer.org}} container image specifically to be distributed via a software distribution network based on CERN's CernVM-FS\footnote{\url{https://sw.lsst.eu}}. SLAC subscribes to this distribution channel and makes available the Rubin software stack to pipeline developers, to individual users, as well as to tasks executing in its batch farm. Hosted by the French data facility, this distribution mechanism ensures all Rubin data facilities use a bit-by-bit identical copy of the software for producing the data releases and allows data centers where science collaborations will consume Rubin data products to get an always up-to-date release of the software (e.g. NERSC\footnote{\url{https://www.nersc.gov}}).

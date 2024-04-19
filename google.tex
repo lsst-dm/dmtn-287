@@ -10,7 +10,6 @@ The client/server Butler manages metadata about data products and user rights to
 It can generate signed URLs that provide anonymous, bearer access for a limited time to specific files in the underlying storage at the USDF.
 These URLs can be consumed by RSP services, or they can be returned directly to science users, avoiding mediation of network traffic by Google (which would count as egress).
 The client/server Butler is further discussed in this SPIE paper \cite{2024SPIE13101.129Jtmp}.
-
 For performance reasons, we may host a subset of the data products, either statically or dynamically chosen (or a combination of both), in the cloud.
 
 We also will provide a service for advanced science users to execute batch jobs.
@@ -25,6 +24,6 @@ In Data Preview 0.3 on IDF, the Qserv database instance was moved to SLAC, so we
 \begin{figure}
 \begin{centering}
 \includegraphics[width=0.9\textwidth]{RSP.png}
-	\caption{ Users hosted on Google will typically use the Rubin Science Platform (RSP) depicted here.  \label{fig:goglearch}}
+	\caption{ Users hosted on Google will typically use the Rubin Science Platform (RSP) depicted here.  \label{fig:rsp}}
 \end{centering}
 \end{figure}
