@@ -3,9 +3,8 @@
 Rubin Observatory has a rigorous approach to requirements management \cite{2016SPIE.9911E..0DS}.
 Most relevant requirements for the USDF are in the Data Management Subsystem Requirements (DMSR) document \cite{LSE-61}.
 Having to switch data facilities encouraged us to pull system requirements which affect the data facility into one document
-which was used to scope the SLAC operations \cite{rtn-080}, which we will not enumarate here although the tables of requirements broadly matching this section may be found there.
-
-In summary the USDF is responsible for significant functionality in several areas as outlined below.
+which was used to scope the SLAC operations \cite{rtn-080}, which we will not enumerate here although the tables of requirements broadly matching this section may be found there.
+The USDF is responsible for significant functionality in several areas as outlined below.
 
 
 \subsection{Networking } \label{sec:networking}
@@ -18,7 +17,6 @@ Enough bandwidth must also be available to exchange files with France and the UK
 The USDF will need to run the Prompt Processing framework in near-real-time in order to execute the Alert Production payload that generates prompt data products and alerts corresponding to changes in the sky.
 The processing is to be completed and alerts are to be distributed within two minutes of the end of readout of an image from the LSST Camera.
 Quality control metrics for the images also need to be generated and made available to staff.
-
 Prompt products, including both images and catalogs, and alerts are stored for retrieval by science users and staff.
 
 \subsection{Batch System} \label{sec:offlineprod}
@@ -28,23 +26,28 @@ The USDF is responsible for providing infrastructure for executing 35\% of the D
 Certain products will also be distributed to Independent Data Access Centers and Science Collaborations.\cite{RTN-003}
 
 The batch system and associated interactive nodes are also used extensively by staff for development of future versions of the LSST Science Pipelines code.\cite{2019ASPC..523..521B}
+Though most science user access will be via the Data Access Center (DAC) (see \autoref{sec:usdac})
+there are requirements for science users to have some access to batch-type processing for larger-scale, non-interactive computations on the data.\cite{DMTN-223}
+
+This will be controlled by a Resource Allocation Committee
 
 \subsection{Data transfer and preservation} \label{req:dbb}
 The USDF is responsible for operating the systems that track all raw data and released data products, including managing their movement, backup, and lifetime.
 These systems must be fault-tolerant and able to catch up after failures.
 
-\subsection{US Data Access Center}
+\subsection{US Data Access Center}\label{sec:usdac}
 The USDF hosts the US DAC.
-To science users, the DAC is primarily an installation of the Rubin Science Platform (RSP)\cite{LDM-542} see \autoref{fig:rsp}.
+To science users, the DAC appears primarily as an installation of the Rubin Science Platform (RSP)\cite{LDM-542} see \autoref{fig:rsp}.
 This software includes the Portal Aspect, a web-based application for browsing, querying, and investigating the data products; the Notebook Aspect, which allows interactive, customized programs to retrieve and manipulate the data products; and the API Aspect, which provides community-standard protocols for automated retrieval of data.
 The RSP is deployed using Helm and ArgoCD as a suite of services on top of Kubernetes.
 
 In the hybrid model, most of this will now be hosted in the cloud, with the underlying data, both prompt products and annual Data Release products, fed from the USDF at SLAC.
-But an RSP for staff will be deployed on top of a Kubernetes cluster provided by the USDF.
+But an RSP for staff will also be deployed on top of a Kubernetes cluster provided by the USDF.
 
-There are requirements for science users to have some access to batch-type processing for larger-scale, non-interactive computations on the data.\cite{DMTN-223}
 This system is to be sized for around 10K users with perhaps 1K simultaneously accessing at any given time.
+Each user will have a limited amount of user space (order 100GB) for storage of output images and queries.
 
-There is further functionality specified for the DAC such as precovery, product regeneration and special program support.
+There is further functionality specified for the DAC such as precovery, product regeneration and special program support which imply invocation
+of batch processing.
 User generated products must be stored and potentially shared; catalog uploads will also be allowed.
 Access is not only to the current Release but also one previous Release of the data.
