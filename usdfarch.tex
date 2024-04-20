@@ -112,14 +112,13 @@ Three large database systems are minimally using Kubernetes, as they
 are either commercial or custom services with no native Kubernetes
 support. These are the Engineering and Facilities Database (EFD),\cite{2024SPIE13101.59Ftmp}
 Qserv, and Cassandra systems, with Qserv the custom system.
-The EFD is implemented with an InfluxDB Enterprise HA cluster.
+The EFD is implemented with an InfluxDB Enterprise High Availability cluster.
 
 For monitoring we use Prometheus.  Prometheus has native support for
 Kubernetes metrics and many of the Kubernetes operators described earlier
 like Strimzi and the Cloud Native Postgres (CNPG) natively provide metrics in Prometheus. We also
 wrote some of our own metrics to track Prompt Processing.
 We use Grafana for creating dashboards to visual metrics and for generating alarms when thresholds are crossed.
-
 For logging we use Loki from Grafana Labs to capture logs from Kubernetes
 and application level logs.  Loki supports S3 as a backend so we store logs
 in an on-premise S3 Ceph Cluster.

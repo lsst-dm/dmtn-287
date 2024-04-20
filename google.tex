@@ -1,6 +1,6 @@
 \section{Architecture on Google cloud} \label{sec:google}
 
-As the RSP services were built for cloud deployment (see \autoref{sec:deploy}), they are elastically scalable and easy to set up.
+As the RSP (\autoref{fig:rsp})  services were built for cloud deployment (see \autoref{sec:deploy}), they are elastically scalable and easy to set up.
 The Portal and Notebook Aspects each run as an application (in the ArgoCD sense), while each API within the API Aspect is its own application.
 They rely on a common authentication and authorization (and throttling) infrastructure to ensure that only science users with appropriate data rights have access.
 
@@ -11,7 +11,7 @@ It can generate signed URLs that provide anonymous, bearer access for a limited 
 These URLs can be consumed by RSP services, or they can be returned directly to science users, avoiding mediation of network traffic by Google (which would count as egress).
 For performance reasons, we may host a subset of the data products, either statically or dynamically chosen (or a combination of both), in the cloud.
 
-We also will provide a service for advanced science users to execute batch jobs.
+We will also provide a service for advanced science users to execute batch jobs.
 Since these jobs are expected to involve processing a large amount of data, it makes sense to run them at the USDF.
 We can either have these specialized users obtain SLAC accounts, or we can use batch processing tools designed for the grid to manage the jobs and corresponding resource and access controls.
 
