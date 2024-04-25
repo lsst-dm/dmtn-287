@@ -15,15 +15,14 @@ We have had ways to abstract system services from our developed services for som
 These work well enough for single user single processor deployments.
 When scaling up to another level of orchestration, Kubernetes fits neatly between our infrastructure and our developed applications providing a powerful container orchestration and resource management system.
 
-Our agreement with each facility is to provide a Kubernetes deployment platform upon which we may deploy our services.
+Our agreement with each facility is to provide a Kubernetes deployment platform upon which we may deploy our services and our secrets vault for security.
 Each thus provides a Kubernetes environment with disk, network and compute resources upon which we spin up our services.
-A vault for secrets is also needed.
 From the service perspective each facility looks similar.
 It feels like the first time that this actually works well - we have learned to make our applications portable of course but also the technology is so much better than any precursors.
 
 \subsection{Phalanx, Helm and ArgoCD}
 
-Helm\footnote{https://helm.sh/} is a standard approach which we use to manage our Kubernetes applications.
+Helm is a standard approach which we use to manage our Kubernetes applications.
 For our purposes this is most usually a JSON file describing which GitHub repo our code is in where the container is and how to start it.
 
 There are parts of this configuration which are site specific and parts which are generic.
@@ -45,5 +44,5 @@ In Phalanx a specific branch or tag can be used to test a specific new release o
 We normally also enable pre-commit to run linting and formatting using black\footnote{\url{https://black.readthedocs.io/en/stable/}}.
 Most Phalanx applications use tox\footnote{\url{https://tox.wiki/en/latest/index.html}} for Python automation (testing, documentation building etc).
 
-The science pipelines are built by Jenkins nightly.\cite{2018SPIE10707E..09J}
+The science pipelines are built by Jenkins\footnote{\url{https://jenkins.io}} nightly.\cite{2018SPIE10707E..09J}
 For specific changes developers may invoke the \emph{stack-os-matrix}\footnote{\url{https://developer.lsst.io/stack/jenkins-stack-os-matrix.html}} to check changes will not break the nightly build. Weekly and stable releases are built from sources and packaged as a conda\footnote{\url{https://docs.conda.io}} environment as well as an Apptainer\footnote{\url{https://apptainer.org}} container image specifically to be distributed via a software distribution network based on CERN's CernVM-FS\footnote{\url{https://sw.lsst.eu}}. SLAC subscribes to this distribution channel and makes available the Rubin software stack to pipeline developers, to individual users, as well as to tasks executing in its batch farm. Hosted by the French data facility, this distribution mechanism ensures all Rubin data facilities use an identical copy of the software to produce the data releases and allows data centers where science collaborations will consume Rubin data products to get an always up-to-date release of the software (e.g., NERSC\footnote{\url{https://www.nersc.gov}}).

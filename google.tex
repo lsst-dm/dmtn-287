@@ -1,6 +1,6 @@
 \section{Architecture on Google Cloud} \label{sec:google}
 
-As the RSP (\autoref{fig:rsp})  services were built for cloud deployment (see \autoref{sec:deploy}), they are elastically scalable and easy to set up.
+As the RSP services were built for cloud deployment (see \autoref{sec:deploy}), they are elastically scalable and easy to set up.
 The Portal and Notebook Aspects each run as an ArgoCD application, while each API within the API Aspect is its own application.
 They rely on a common authentication and authorization (and throttling) infrastructure to ensure that only science users with appropriate data rights have access.
 

@@ -61,10 +61,10 @@ number of and duration of processes: astronomy tends to many more much
 shorter jobs than HEP.\cite{2023arXiv231204921K} Significant effort was required working with the PanDA
 team to cluster up short jobs to avoid prohibitive startup costs.
 PanDA is a heavyweight solution to processing; local processing for
-the pipelines teams and developers is done using HTCondor.
+the pipelines teams and developers is done using HTCondor\footnote{\url{https://htcondor.org}}.
 
-Data management and movement is also orchestrated by LHC tools: Rucio
-for data management and FTS3 for movement. These tools also routinely
+Data management and movement is also orchestrated by LHC tools: Rucio\footnote{\url{https://rucio.cern.ch}}
+for data management and FTS3\footnote{\url{https://fts3-docs.web.cern.ch/fts3-docs/}} for movement. These tools also routinely
 handle large numbers of files and transfers, however the difference between astronomy
 and HEP persists here as well, with astronomy generating many more,
 much smaller files than HEP. This will make the Rubin Rucio database
@@ -98,7 +98,7 @@ making administration, backups, etc, scalable. Rucio and PanDA are
 managed by Kubernetes to take advantage of these features.
 
 The Prompt Processing framework executing the Alert Production is implemented
-using Knative on top of
+using Knative\footnote{\url{https://knative.dev/docs/}} on top of
 Kubernetes to allow elastic instantiation, configuration, and teardown of
 pods responding to notifications from the summit in advance of the
 next visit.
@@ -113,7 +113,7 @@ support. These are the Engineering and Facilities Database (EFD),\cite{2024SPIE1
 Qserv, and Cassandra systems, with Qserv the custom system.
 The EFD is implemented with an InfluxDB Enterprise High Availability cluster.
 
-For monitoring we use Prometheus.  Prometheus has native support for
+For monitoring we use Prometheus\footnote{\url{https://prometheus.io}}.  Prometheus has native support for
 Kubernetes metrics and many of the Kubernetes operators described earlier
 like Strimzi and the Cloud Native Postgres (CNPG) natively provide metrics in Prometheus. We also
 wrote some of our own metrics to track Prompt Processing.
