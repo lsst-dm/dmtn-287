@@ -2,10 +2,10 @@
 
 Commercial cloud providers are generally competitive with on-premises facilities for provision of compute cycles, especially where the needs are time-varying.
 Storage costs, however, tend to be higher in the cloud than at research facilities, possibly due to higher durability and availability requirements for commercial data than for research data.
-In terms of networking, cloud providers do not charge for data movement to the cloud from elsewhere, but they do charge for egress from the cloud.
+Cloud providers do not charge for data import to the cloud, but they do charge for egress from the cloud.
 
 The hybrid model we have chosen uses the cloud for highly-elastic support of science users while keeping the more-constant near-real-time nightly compute load and high-throughput annual reprocessing load at on-premises facilities.
-The bulk of the storage is also maintained on-premises, with relatively small caches and user data living in the cloud.
+The bulk of the storage is also maintained on-premises, with relatively small caches and user data kept in the cloud.
 This design ensures that the bulk of the data transfer is from SLAC to the cloud, qualifying as free ingress.
 Science users are expected to process the data in the cloud, reducing its volume prior to retrieval to their own systems.
 Thus we attempt to use the strengths of each provider.

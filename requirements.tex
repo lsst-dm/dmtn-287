@@ -28,7 +28,7 @@ Certain products will also be distributed to Independent Data Access Centers and
 The batch system and associated interactive nodes are also used extensively by staff for development of future versions of the LSST Science Pipelines code.\cite{2019ASPC..523..521B}
 Though most science user access will be via the Data Access Center (DAC) (see \autoref{sec:usdac})
 there are requirements for science users to have some access to batch-type processing for larger-scale, non-interactive computations on the data.\cite{DMTN-223}
-This will be controlled by a Resource Allocation Committee
+This will be controlled by a Resource Allocation Committee.
 
 \subsection{Data transfer and preservation} \label{req:dbb}
 The USDF is responsible for operating the systems that track all raw data and released data products, including managing their movement, backup, and lifetime.
@@ -36,12 +36,12 @@ These systems must be fault-tolerant and able to catch up after failures.
 
 \subsection{US Data Access Center}\label{sec:usdac}
 The USDF hosts the US DAC.
-To science users, the DAC appears primarily as an installation of the Rubin Science Platform (RSP)\cite{LDM-542} see \autoref{fig:rsp}.
+To science users, the DAC appears primarily as an installation of the Rubin Science Platform (RSP)\cite{LDM-542} (see \autoref{fig:rsp}).
 This software includes the Portal Aspect, a web-based application for browsing, querying, and investigating the data products; the Notebook Aspect, which allows interactive, customized programs to retrieve and manipulate the data products; and the API Aspect, which provides community-standard protocols for automated retrieval of data.
 The RSP is deployed using Helm and ArgoCD as a suite of services on top of Kubernetes.
 
-In the hybrid model, most of this will now be hosted in the cloud, with the underlying data, both prompt products and annual Data Release products, fed from the USDF at SLAC.
-But an RSP for staff will also be deployed on top of a Kubernetes cluster provided by the USDF.
+In the hybrid model, most of this will be hosted in the cloud, with the underlying data, both prompt products and annual Data Release products, fed from the USDF at SLAC.
+An RSP for staff will also be deployed on top of a Kubernetes cluster provided by the USDF.
 
 This system is to be sized for around 10K users with perhaps 1K simultaneously accessing at any given time.
 Each user will have a limited amount of user space (order 100GB) for storage of output images and queries.
@@ -49,4 +49,4 @@ Each user will have a limited amount of user space (order 100GB) for storage of 
 There is further functionality specified for the DAC such as precovery, product regeneration and special program support which imply invocation
 of batch processing.
 User generated products must be stored and potentially shared; catalog uploads will also be allowed.
-Access is not only to the current Release but also one previous Release of the data.
+Access is to the current and previous year's Data Release.

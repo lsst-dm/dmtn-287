@@ -1,41 +1,40 @@
 \section{Continuous Deployment across the Rubin facilities} \label{sec:deploy}
 
-Being cloud ready is certainly the biggest challenge for most projects/applications which intend to leverage the commercial cloud.
-Early on we adopted Kubernetes which provided a service architectures that is well isolated from the underlying infrastructure.
+Being cloud-ready is certainly the biggest challenge for most projects/applications which intend to leverage the commercial cloud.
+Early on we adopted Kubernetes which provided a service architecture that is well isolated from the underlying infrastructure.
 This approach has already paid off massive dividends.
 For example when funding lines suddenly shifted we were able to painlessly transition from an on-premises facility to an Interim Data Facility on Google Cloud.
 Furthermore the Rubin Science Platform (RSP) became a generic data services platform that is currently deployed on eight distinct (and distinctly managed) infrastructures (on-prem and cloud).
-Finally this has allowed us to leverage the Cloud for services like the RSP which benefit from its advantages such as elasticity, scalability, isolation.
+Finally this has allowed us to leverage the cloud for services like the RSP which benefit from its advantages such as elasticity, scalability, isolation.
 
 
 
 
 \subsection{Division of responsibilities}
-We have had ways to abstract system services from our developed services for some time, containers and java effectively allow one to run \emph{anywhere}.
+We have had ways to abstract system services from our developed services for some time, containers and Java effectively allow one to run \emph{anywhere}.
 These work well enough for single user single processor deployments.
-When you need to scale up another level of orchestration is needed, kubernetes fits neatly between our infrastructure and our developed applications providing a powerful container orchestration and resource management system.
+When scaling up to another level of orchestration, Kubernetes fits neatly between our infrastructure and our developed applications providing a powerful container orchestration and resource management system.
 
 Our agreement with each facility is to provide a Kubernetes deployment platform upon which we may deploy our services.
-Each thus provides a kubernetes environment with disk, network and compute resources upon which we spin up our services.
+Each thus provides a Kubernetes environment with disk, network and compute resources upon which we spin up our services.
 A vault for secrets is also needed.
 From the service perspective each facility looks similar.
 It feels like the first time that this actually works well - we have learned to make our applications portable of course but also the technology is so much better than any precursors.
 
 \subsection{Phalanx, Helm and ArgoCD}
 
-Helm\footnote{https://helm.sh/} is a standard approach to tell Kubernetes about software.
+Helm\footnote{https://helm.sh/} is a standard approach which we use to manage our Kubernetes applications.
 For our purposes this is most usually a JSON file describing which GitHub repo our code is in where the container is and how to start it.
 
-Of course there are parts of this configuration which are site specific and parts which are generic.
+There are parts of this configuration which are site specific and parts which are generic.
 For example the database URL for an application will be different in USDF and Summit, the \emph{value} of the database URL is different are each site, the URL variable is the same so the application does not change only the configuration.
 Phalanx\footnote{\url{https://phalanx.lsst.io}} is our repository of configuration files for all of our deployments.
-Within Phalanx each application has a directory with a helm configuration - it also has a values file for each environment to specify the specific values for that environment.
+Within Phalanx each application has a directory with a Helm configuration - it also has a values file for each environment to specify the specific values for that environment.
 Each environment also has a Vault configuration so that secrets such as database password may also be specified by an environment specific identifier.
 Finally Phalanx has a list of deployed applications on each site.
 
-Actual deployment is manged by ArgoCD\footnote{https://argo-cd.readthedocs.io/en/stable/}.
-As the name implies ArgoCD provides continuous delivery for Kubernetes.
-It interprets the configuration files stored in Phalanx to deploy containers on the kubernetes system associated with each environment.
+Actual deployment is managed by ArgoCD\footnote{https://argo-cd.readthedocs.io/en/stable/}, which provides continuous delivery for Kubernetes.
+It interprets the configuration files stored in Phalanx to deploy containers on the Kubernetes system associated with each environment.
 Some of the current environments are listed in \autoref{tab:envs}, typically each environment also has a \emph{dev} and \emph{integration} version.
 This is a powerful system which can track the main or any given branch or tag of a github repository to keep the application in sync.
 \input{envs}
@@ -43,8 +42,8 @@ This is a powerful system which can track the main or any given branch or tag of
 \subsection{Continuous Integration}
 We rely on Github actions to build containers for each branch or tag of a given application.
 In Phalanx a specific branch or tag can be used to test a specific new release of a given application.
-We normally also enable pre-commit to run linting and formatting (black\footnote{\url{https://black.readthedocs.io/en/stable/}}).
+We normally also enable pre-commit to run linting and formatting using black\footnote{\url{https://black.readthedocs.io/en/stable/}}.
 Most Phalanx applications use tox\footnote{\url{https://tox.wiki/en/latest/index.html}} for Python automation (testing, documentation building etc).
 
 The science pipelines are built by Jenkins nightly.\cite{2018SPIE10707E..09J}
-For specific changes developers may invoke the \emph{stack-os-matrix}\footnote{\url{https://developer.lsst.io/stack/jenkins-stack-os-matrix.html}} to check changes will not break the nightly build. Weekly and stable releases are built from sources and packaged as a conda\footnote{\url{https://docs.conda.io}} environment as well as an Apptainer\footnote{\url{https://apptainer.org}} container image specifically to be distributed via a software distribution network based on CERN's CernVM-FS\footnote{\url{https://sw.lsst.eu}}. SLAC subscribes to this distribution channel and makes available the Rubin software stack to pipeline developers, to individual users, as well as to tasks executing in its batch farm. Hosted by the French data facility, this distribution mechanism ensures all Rubin data facilities use a bit-by-bit identical copy of the software for producing the data releases and allows data centers where science collaborations will consume Rubin data products to get an always up-to-date release of the software (e.g., NERSC\footnote{\url{https://www.nersc.gov}}).
+For specific changes developers may invoke the \emph{stack-os-matrix}\footnote{\url{https://developer.lsst.io/stack/jenkins-stack-os-matrix.html}} to check changes will not break the nightly build. Weekly and stable releases are built from sources and packaged as a conda\footnote{\url{https://docs.conda.io}} environment as well as an Apptainer\footnote{\url{https://apptainer.org}} container image specifically to be distributed via a software distribution network based on CERN's CernVM-FS\footnote{\url{https://sw.lsst.eu}}. SLAC subscribes to this distribution channel and makes available the Rubin software stack to pipeline developers, to individual users, as well as to tasks executing in its batch farm. Hosted by the French data facility, this distribution mechanism ensures all Rubin data facilities use an identical copy of the software to produce the data releases and allows data centers where science collaborations will consume Rubin data products to get an always up-to-date release of the software (e.g., NERSC\footnote{\url{https://www.nersc.gov}}).
