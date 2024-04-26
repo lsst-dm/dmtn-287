@@ -4,7 +4,7 @@
 \begin{figure}
 \begin{centering}
 \includegraphics[width=0.9\textwidth]{hybrid}
-	\caption{ Hybrid model: Data at SLAC but users on the Cloud.  \label{fig:usdfarch}}
+	\caption{ Hybrid model: Data at SLAC but users on the cloud.  \label{fig:usdfarch}}
 \end{centering}
 \end{figure}
 
@@ -14,8 +14,7 @@ Release Processing. The USDF acts as the archive for all data, and
 provides the Qserv object catalog as well as access to image data, be
 it cutouts or full images. It will provide batch cycles for cloud-based science users.
 It will also act as a home for developers and staff (and
-commissioners) to ensure data quality.
-This is depicted in \autoref{fig:usdfarch}.
+commissioners) to ensure data quality (see \autoref{fig:usdfarch}).
 
 
 \subsection{Hardware}
@@ -39,7 +38,7 @@ Batch processing is done on a Slurm cluster, currently primarily Advanced Micro 
 processors with 128 cores and 512 GB RAM per node.
 
 Data is transported to the USDF from the summit over a combined
-leased-line, ESNet supported network with routing optimized via an
+leased-line, ESNet-supported network with routing optimized via an
 overlay. The leased line terminates in Atlanta, where ESNet takes
 over. Traffic to the two other Data Facilities is also provided by
 ESNet, connecting to the GEANT\footnote{pan-European data network for the research and education community}
@@ -62,12 +61,12 @@ number of and duration of processes: astronomy tends to many more much
 shorter jobs than HEP.\cite{2023arXiv231204921K} Significant effort was required working with the PanDA
 team to cluster up short jobs to avoid prohibitive startup costs.
 PanDA is a heavyweight solution to processing; local processing for
-the pipelines teams and developers is done using HTCondor.
+the pipelines teams and developers is done using HTCondor\footnote{\url{https://htcondor.org}}.
 
-Data management and movement is also orchestrated by LHC tools: Rucio
-for data management and FTS3 for movement. These tools also routinely
-handle large numbers of files and transfers, but the astronomy:HEP
-difference persists here as well, with astronomy generating many more,
+Data management and movement is also orchestrated by LHC tools: Rucio\footnote{\url{https://rucio.cern.ch}}
+for data management and FTS3\footnote{\url{https://fts3-docs.web.cern.ch/fts3-docs/}} for movement. These tools also routinely
+handle large numbers of files and transfers, however the difference between astronomy
+and HEP persists here as well, with astronomy generating many more,
 much smaller files than HEP. This will make the Rubin Rucio database
 bigger than ATLAS's and will require some growth planning.
 
@@ -79,7 +78,7 @@ for better transfer as well as easier storage on tape.
 
 Currently the primary reasons for putting services on-prem are a low
 latency requirement for prompt processing, and the still-unfavorable
-comparison of storage prices between on-prem and cloud. To a lesser
+comparison of storage prices between on-prem and the cloud. To a lesser
 degree, those comparisons also apply to CPU.
 
 This means that Prompt Processing and Alerts production, with their
@@ -99,7 +98,7 @@ making administration, backups, etc, scalable. Rucio and PanDA are
 managed by Kubernetes to take advantage of these features.
 
 The Prompt Processing framework executing the Alert Production is implemented
-using Knative on top of
+using Knative\footnote{\url{https://knative.dev/docs/}} on top of
 Kubernetes to allow elastic instantiation, configuration, and teardown of
 pods responding to notifications from the summit in advance of the
 next visit.
@@ -114,11 +113,10 @@ support. These are the Engineering and Facilities Database (EFD),\cite{2024SPIE1
 Qserv, and Cassandra systems, with Qserv the custom system.
 The EFD is implemented with an InfluxDB Enterprise High Availability cluster.
 
-For monitoring we use Prometheus.  Prometheus has native support for
+For monitoring we use Prometheus\footnote{\url{https://prometheus.io}}.  Prometheus has native support for
 Kubernetes metrics and many of the Kubernetes operators described earlier
 like Strimzi and the Cloud Native Postgres (CNPG) natively provide metrics in Prometheus. We also
 wrote some of our own metrics to track Prompt Processing.
 We use Grafana for creating dashboards to visual metrics and for generating alarms when thresholds are crossed.
-For logging we use Loki from Grafana Labs to capture logs from Kubernetes
-and application level logs.  Loki supports S3 as a backend so we store logs
-in an on-premise S3 Ceph Cluster.
+We use Loki from Grafana Labs to capture logs from Kubernetes pods
+and from application level logs. Loki stores these logs in an on-premise S3 Ceph Cluster.
