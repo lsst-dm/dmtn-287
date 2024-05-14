@@ -17,7 +17,7 @@ Links
 
 - Live drafts: https://dmtn-287.lsst.io
 - GitHub: https://github.com/lsst-dm/dmtn-287
-- Poster: https://docs.google.com/presentation/d/1hP2Xrz7jDOg59IZUwFaji_0WxRcr3c5yKDz2hFb-ggU/edit#slide=id.p 
+- Poster: https://dmtn-287.lsst.io/Poster.pdf
 
 Build
 =====
